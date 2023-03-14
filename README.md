@@ -1,3 +1,7 @@
+para el frontend esta con las diferentes librerias
+
+npm i 
+
 # examen
 la api esta inicializando en el puerto 3200
 

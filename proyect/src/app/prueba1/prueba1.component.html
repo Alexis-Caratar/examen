@@ -1,0 +1,111 @@
+ <div class="card container">
+    <br><br> <br>
+    <h2 class="text-center">LISTADO DE TAREAS</h2>
+
+    <mat-form-field>
+      <mat-label>FILTRO</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="tarea 1" #input>
+    </mat-form-field>
+
+    <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Add" (click)="openModal()" ><i class="fa fa-table">ADICIONAR</i></button>
+    <div class="mat-elevation-z8 table">
+      <table mat-table [dataSource]="dataSource" matSort>    
+
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+        </ng-container>
+    
+        <!-- Progress Column -->
+        <ng-container matColumnDef="progress">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> TITULO </th>
+          <td mat-cell *matCellDef="let row"> {{row.titulo}} </td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> DESCRIPCION </th>
+          <td mat-cell *matCellDef="let row"> {{row.descripcion}} </td>
+        </ng-container>
+    
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="fruit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTADO </th>
+          <td mat-cell *matCellDef="let row"> {{row.estado}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="opciones">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>  opciones </th>
+          <td mat-cell *matCellDef="let row"> 
+              <!-- Call to action buttons -->
+              <ul class="list-inline m-0">
+                  <li class="list-inline-item">
+                  </li>
+                  <li class="list-inline-item">
+                    <button *ngIf="row.estado==='P'" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Completar tarea" (click)='confirmartarea(row.id)'><i class="fa fa-check"></i></button>
+                      <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" (click)='eliminar(row.id)'><i class="fa fa-trash"></i></button>
+                  
+                    </li>
+                
+              </ul>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!-- Row shown when there is no matching data. -->
+      </table>
+
+      <mat-paginator #paginator [pageSize]="10"></mat-paginator>
+
+    </div>
+  </div>
+
+  <!--modales-->
+
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{'display':displayStyle}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Adicionar un registro</h4>
+      </div>
+      <div class="modal-body">
+    
+        <form (ngSubmit)="onSubmit()">
+          <label>
+            TITULO
+            <input class="form-control" type="text" name="titulo" [(ngModel)]="titulo" required>
+          </label>
+          <br>
+          <label>
+            Descripcion
+            <input  class="form-control" type="text-area" name="descripcion" [(ngModel)]="descripcion" required>
+          </label>
+          <br>
+          <br>
+          <label>
+            ESTADO
+            <input  type="checkbox" name="estado" [(ngModel)]="estado" required>
+          </label>
+          <br> <br><br>
+          <button type="submit" class="btn btn-success">GUARDAR</button>
+          <button type="button" class="btn btn-danger"  (click)="closePopup()">cerrar</button>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+    <label> llenar todos los campos de las tareas </label>
+    <label> AL ESTAR CHEKEADO LA TAREA ESTA COMPLETADA POR EL CONTRARIO LA TAREA ESTARA EN PENDIENTE </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  
